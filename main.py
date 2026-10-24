@@ -24,7 +24,7 @@ logging.basicConfig(
 logger = logging.getLogger("MultiBotRunner")
 
 async def _health_handler(request):
-    return web.Response(text="🤖 Telegram Multi-Bot is active and running 24/7!", content_type="text/plain; charset=utf-8")
+    return web.Response(text="OK", content_type="text/plain", charset="utf-8")
 
 async def start_health_server():
     """Lightweight HTTP server so Render Web Service detects the open port and doesn't timeout."""
