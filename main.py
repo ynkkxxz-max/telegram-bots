@@ -1,4 +1,6 @@
+import os
 import socket
+from aiohttp import web
 
 # Force IPv4 to prevent IPv6 DNS timeout issues on Windows
 _orig_getaddrinfo = socket.getaddrinfo
@@ -20,6 +22,24 @@ logging.basicConfig(
     level=logging.INFO,
 )
 logger = logging.getLogger("MultiBotRunner")
+
+async def _health_handler(request):
+    return web.Response(text="🤖 Telegram Multi-Bot is active and running 24/7!", content_type="text/plain; charset=utf-8")
+
+async def start_health_server():
+    """Lightweight HTTP server so Render Web Service detects the open port and doesn't timeout."""
+    port = int(os.environ.get("PORT", "8080"))
+    try:
+        app = web.Application()
+        app.router.add_get("/", _health_handler)
+        app.router.add_get("/health", _health_handler)
+        runner = web.AppRunner(app)
+        await runner.setup()
+        site = web.TCPSite(runner, "0.0.0.0", port)
+        await site.start()
+        logger.info(f"🌐 Health-check HTTP server listening on port {port}")
+    except Exception as e:
+        logger.warning(f"Could not bind HTTP server to port {port}: {e}")
 
 async def run_single_bot(bot_builder, token: str, bot_name: str, stop_event: asyncio.Event):
     """Run an individual bot application concurrently with auto-reconnect."""
@@ -50,6 +70,9 @@ async def run_single_bot(bot_builder, token: str, bot_name: str, stop_event: asy
 async def main():
     stop_event = asyncio.Event()
     tasks = []
+    
+    # Start web health server for Render/Cloud keep-alive
+    await start_health_server()
     
     # 1. Bot 1 (Funny Group Friend Bot)
     if config.BOT_TOKEN_1:
