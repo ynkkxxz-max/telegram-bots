@@ -348,7 +348,13 @@ async def process_chat_text(update: Update, context: ContextTypes.DEFAULT_TYPE, 
         await context.bot.send_chat_action(chat_id=chat.id, action="typing")
 
         reply = await generate_bot_reply(cleaned_text if cleaned_text else text, user_name)
-        await message.reply_text(reply, parse_mode="HTML")
+        try:
+            await message.reply_text(reply, parse_mode="HTML")
+        except Exception as e:
+            if "Message to be replied not found" in str(e):
+                await context.bot.send_message(chat_id=chat.id, text=reply, parse_mode="HTML")
+            else:
+                logger.error(f"Failed to send text reply: {e}")
 
         if wants_sticker or random.random() < 0.25:
             try:
@@ -416,5 +422,14 @@ def build_bot1_app(token: str) -> Application:
     # 5. Regular text messages (and unknown commands)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_handler(MessageHandler(filters.COMMAND, handle_unknown_command))
+
+    # Global error handler
+    async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+        if context.error and "Message to be replied not found" in str(context.error):
+            logger.info(f"Handled deleted message gracefully: {context.error}")
+            return
+        logger.error(f"Telegram error: {context.error}")
+
+    app.add_error_handler(error_handler)
 
     return app
