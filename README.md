@@ -1,0 +1,76 @@
+# 🤖 Telegram Multi-Bot System (ដំណើរការ Bot 3 ក្នុងពេលតែមួយ)
+
+គម្រោងនេះអនុញ្ញាតឱ្យអ្នកដំណើរការ Telegram Bot ចំនួន ៣ (ឬច្រើនជាងនេះ) ក្នុងពេលតែមួយដោយប្រើពាក្យបញ្ជាតែមួយតាមរយៈ Python និង `asyncio`។
+
+---
+
+## 📁 រចនាសម្ព័ន្ធគម្រោង (Project Structure)
+
+```
+c:\Users\TG168\Desktop\Bot\
+├── .env                  # កន្លែងដាក់ Tokens របស់ Bot ទាំង ៣ និង Gemini API Key
+├── config.py             # Configuration loader
+├── main.py               # កម្មវិធីមេដំណើរការ Bot ទាំងអស់ព្រមគ្នា
+├── bots/
+│   ├── bot1_funny.py     # Bot ទី ១៖ Bot មិត្តភក្តិប្រចាំគ្រុប (@funnychatkh_bot)
+│   ├── bot2.py           # Bot ទី ២ (រង់ចាំ Token និងមុខងារ)
+│   └── bot3.py           # Bot ទី ៣ (រង់ចាំ Token និងមុខងារ)
+└── utils/
+    ├── ai_helper.py      # Gemini AI Chatbot + Smart Fallback
+    └── khmer_jokes.py    # ប្រមូលផ្ដុំរឿងកំប្លែង ពាក្យបណ្តៅ ការលើកទឹកចិត្តជាភាសាខ្មែរ
+```
+
+---
+
+## 🚀 របៀបដំណើរការ (How to Run)
+
+បើក Terminal ក្នុង Folder នេះ រួចវាយពាក្យបញ្ជា៖
+```powershell
+python main.py
+```
+
+---
+
+## ⚙️ ការកំណត់ Bot ទី ២ និង ទី ៣ (Adding Bot 2 & Bot 3)
+
+បើកឯកសារ `.env` ហើយបញ្ចូល Token ដែលទទួលបានពី **@BotFather**៖
+
+```env
+BOT_TOKEN_1=8924846395:AAFOGLG4LywUd2I6BqN0WsAaXFJdijSEtYo
+BOT_TOKEN_2=your_bot_2_token_here
+BOT_TOKEN_3=your_bot_3_token_here
+
+# ជម្រើសបន្ថែម៖ ដាក់ Gemini API Key ដើម្បីឱ្យ Bot ឆ្លើយឆ្លងឆ្លាតដូចមនុស្ស (យក Free ពី https://aistudio.google.com)
+GEMINI_API_KEY=
+```
+
+---
+
+## 🎭 មុខងាររបស់ Bot ទី ១ (@funnychatkh_bot - Bot មិត្តភក្តិប្រចាំគ្រុប)
+
+### ១. ពាក្យបញ្ជា (Commands):
+- `/start` : ស្វាគមន៍ និងណែនាំខ្លួន
+- `/fact` : ចំណេះដឹងទូទៅប្លែកៗគួរឱ្យចាប់អារម្មណ៍ 💡
+- `/quiz` : ល្បងប្រាជ្ញាចំណេះដឹងទូទៅ (Poll Quiz) 🎯
+- `/joke` : ប្រាប់រឿងកំប្លែងខ្មែរខ្លីៗ 😂
+- `/riddle` : ចោទជាពាក្យបណ្តៅឱ្យសមាជិកទាយ (ចុចលើ Spoiler ដើម្បីមើលចម្លើយ) 🤔
+- `/encourage` : លើកទឹកចិត្តបែបកំប្លែងពេលហត់នឿយ ឬស្ត្រេសពីការងារ/រៀន 💪
+- `/tease` : ឱ្យ Bot ចំអន់លេងមួយកំប្លែង 😜
+- `/single` : ចំអន់អ្នកនៅលីវ (Single) 🤣💔
+- `/sticker` : ផ្ញើ Sticker កំប្លែងៗ 🎭
+- `/game` : លេងបោះគ្រាប់ឡុកឡាក់ 🎲
+- `/help` : មើលការណែនាំ
+
+### ២. របៀបលេងក្នុងគ្រុប (Group Interaction):
+- **🛡️ ប្រព័ន្ធ Anti-Link (លុប Link ស្វ័យប្រវត្តិ)**៖ បើសមាជិកធម្មតាផ្ញើ Link (ផ្សាយពាណិជ្ជកម្ម, t.me, https://...) Bot នឹងលុបសារនោះភ្លាមៗ និងផ្ញើសារព្រមានបែបកំប្លែង ព្រមទាំងលុបសារព្រមាននោះវិញក្នុងរយៈពេល ៧ វិនាទី! (Admin អាចផ្ញើ Link បានធម្មតា)
+- **Mention ឈ្មោះ Bot**: វាយ `@funnychatkh_bot` រួចសួរ ឬនិយាយអ្វីមួយ Bot នឹងឆ្លើយតបភ្លាមៗ។
+- **Reply លើ Bot**: ចុច Reply លើសាររបស់ Bot វានឹងជជែកបន្តជាមួយអ្នក។
+- **ស្វាគមន៍សមាជិកថ្មី**: ពេលមានអ្នកចូលគ្រុប Bot នឹងស្វាគមន៍បែបកំប្លុកកំប្លែងអមដោយ Sticker ដោយស្វ័យប្រវត្តិ។
+
+### 💡 ចំណាំសំខាន់អំពី Privacy ក្នុងគ្រុប៖
+Telegram កំណត់ Privacy Mode បិទមិនឱ្យ Bot អានសារទាំងអស់ក្នុងគ្រុបដោយស្វ័យប្រវត្តិទេ។ 
+ដើម្បីឱ្យ Bot អាចអានសារទាំងអស់បានដោយមិនបាច់ Tag `@funnychatkh_bot`៖
+1. ឆាតទៅ **@BotFather**
+2. វាយ `/setprivacy`
+3. ជ្រើសរើស `@funnychatkh_bot`
+4. ចុចជ្រើសរើស **Disable**
