@@ -249,10 +249,6 @@ async def single_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"គេថា 'ស្នេហាដូចថ្នាំញៀន'... បានជា {name} មិនហ៊ានសាក ខ្លាចប៉ូលិសចាប់! 👮‍♂️🤣❤️",
     ]
     await update.message.reply_text(random.choice(single_jokes))
-    try:
-        await update.message.reply_sticker(sticker=get_random_sticker())
-    except Exception:
-        pass
 
 async def game_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler for /game command (animated dice)."""
@@ -289,9 +285,7 @@ async def handle_sticker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     name = get_friendly_name(update)
     bot = context.bot
 
-    file_id = message.sticker.file_id
-    add_sticker(file_id)
-
+    # Only reply if in private chat or replied to bot
     is_private = chat.type == "private"
     is_reply_to_bot = (
         message.reply_to_message
@@ -301,7 +295,7 @@ async def handle_sticker(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if is_private or is_reply_to_bot:
         comments = [
-            f"Sticker នេះឡូយម៉េះ {name}! 😂 ខ្ញុំសុំ Save ទុកលេងដែរហើយ! 🔥",
+            f"Sticker នេះឡូយម៉េះ {name}! 😂 គួរឱ្យស្រឡាញ់ណាស់! 🔥",
             f"មុខដូច Sticker ហ្នឹងបេះបិទ bro/sis! 🤣😜",
             f"Sticker ត្រូវចិត្តហ្មងពួកម៉ាក! តោះតបមួយវិញ! 😎",
             f"ហាហា Sticker អីក៏គួរឱ្យស្រឡាញ់ម្ល៉េះ! 😜❤️",
@@ -332,10 +326,6 @@ async def welcome_new_member(update: Update, context: ContextTypes.DEFAULT_TYPE)
             f"👋 ស្វាគមន៍ idol {name}! ចូលមកហើយកុំសម្ងំស្ងាត់ណា ប្រយ័ត្នខ្ញុំចំអន់លេង! 😜🚀",
         ]
         await update.message.reply_text(random.choice(welcomes))
-        try:
-            await update.message.reply_sticker(sticker=get_random_sticker())
-        except Exception:
-            pass
 
 async def process_chat_text(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str):
     """Internal processor for text and unknown command messages."""
@@ -381,11 +371,11 @@ async def process_chat_text(update: Update, context: ContextTypes.DEFAULT_TYPE, 
             else:
                 logger.error(f"Failed to send text reply: {e}")
 
-        if wants_sticker or random.random() < 0.25:
+        if wants_sticker:
             try:
                 await message.reply_sticker(sticker=get_random_sticker())
             except Exception as e:
-                logger.error(f"Failed to send random sticker: {e}")
+                logger.error(f"Failed to send sticker: {e}")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle chat messages in private and groups."""
