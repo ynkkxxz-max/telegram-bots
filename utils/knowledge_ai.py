@@ -155,8 +155,26 @@ def _smart_offline_reply(user_query: str, user_name: str = "") -> str:
             "👉 តើអ្នកមានចម្ងល់ ឬប្រធានបទអ្វីចង់ពិភាក្សាថ្ងៃនេះដែរ?"
         )
 
-    # 2. បច្ចេកវិទ្យា / AI / បញ្ញាសិប្បនិម្មិត
-    if any(k in t for k in ["ai", "បញ្ញាសិប្បនិម្មិត", "artificial intelligence", "កុំព្យូទ័រ", "បច្ចេកវិទ្យា", "tech"]):
+    # 2. ការជួសជុល និងថែទាំកុំព្យូទ័រ (Computer Repair & Troubleshooting)
+    if any(k in t for k in ["ជួសជុល", "ជុសជុស", "repair", "ខូច", "អេក្រង់ខៀវ", "blue screen", "ram", "ssd", "hdd", "laptop", "pc ដើរយឺត", "គាំង"]):
+        return (
+            "💻 <b>ចំណេះដឹងគ្រឹះអំពីការជួសជុល និងថែទាំកុំព្យូទ័រ (Computer Repair)៖</b>\n\n"
+            "<b>១. បញ្ហាបើកម៉ាស៊ីនដើរ តែមិនចេញរូប (No Display / Black Screen)៖</b>\n"
+            "• <b>មូលហេតុទូទៅ ៨០%៖</b> មកពី RAM កខ្វក់ ឬឡើងស្នឹម\n"
+            "• <b>វិធីដោះស្រាយ៖</b> ដោះដោត RAM ចេញ រួចយក <b>ជ័រលុបខ្មៅដៃ (Pencil Eraser)</b> មកជូតថ្នមៗលើជើងស្ពាន់មាសរបស់ RAM ឱ្យភ្លឺថ្លា រួចផ្លុំសម្អាតធូលីក្នុង Slot និងដោតចូលវិញឱ្យឮសូរ «ក្រិក»។\n\n"
+            "<b>២. បញ្ហាម៉ាស៊ីនដើរយឺត ឬគាំងញឹកញាប់ (Slow Performance)៖</b>\n"
+            "• ប្តូរពី Hard Disk (HDD) ចាស់ មកប្រើ <b>Solid State Drive (SSD)</b> វិញ (ល្បឿនលឿនជាងមុន ៥ ទៅ ១០ ដង)\n"
+            "• សម្អាត File ឥតប្រយោជន៍៖ ចុច Win + R វាយ <code>%temp%</code> រួចលុបចោលទាំងអស់\n"
+            "• បិទកម្មវិធី Startup៖ បើក Task Manager ចូល Startup Apps ហើយ Disable កម្មវិធីដែលមិនចាំបាច់។\n\n"
+            "<b>៣. បញ្ហាឡើងកម្ដៅ និងរលត់ឯកឯង (Overheating & Auto Shutdown)៖</b>\n"
+            "• បោសសម្អាតធូលីដែលកកស្ទះលើកង្ហារ និងកញ្ច្រែងខ្យល់\n"
+            "• ប្តូរ <b>ខ្លាញ់កម្ដៅ (Thermal Paste)</b> ថ្មីលើ CPU រៀងរាល់ ១ ទៅ ២ ឆ្នាំម្តង។\n\n"
+            "<b>៤. បញ្ហាអេក្រង់ខៀវ (Blue Screen of Death - BSOD)៖</b>\n"
+            "• ច្រើនបណ្តាលមកពីខូច Driver, Update Windows មិនពេញលេញ, ឬ Hard Drive មាន Bad Sector។ អាចប្រើ Command <code>sfc /scannow</code> ក្នុង CMD (Admin) ដើម្បីជួសជុល File ប្រព័ន្ធ!"
+        )
+
+    # 3. បច្ចេកវិទ្យា / AI / បញ្ញាសិប្បនិម្មិត
+    if any(k in t for k in ["ai", "បញ្ញាសិប្បនិម្មិត", "artificial intelligence", "បច្ចេកវិទ្យា", "tech"]):
         return (
             "🤖 <b>អ្វីទៅជាបញ្ញាសិប្បនិម្មិត (Artificial Intelligence - AI)?</b>\n\n"
             "<b>១. សេចក្ដីសង្ខេប៖</b>\n"
@@ -246,7 +264,8 @@ def _smart_offline_reply(user_query: str, user_name: str = "") -> str:
             "Albert Einstein បានហៅការប្រាក់ផ្គុំថាជា «អច្ឆរិយៈទី ៨ នៃពិភពលោក» ព្រោះលុយដែលអ្នកសន្សំ ឬវិនិយោគ នឹងបង្កើតផលចំណេញ ហើយផលចំណេញនោះនឹងបង្កើតលុយបន្តបន្ទាប់ឥតឈប់ឈរ!"
         )
 
-    # 9. Default response: structured and encouraging
+
+    # 10. Default response: structured and encouraging
     return (
         f"💡 <b>សូមអរគុណសម្រាប់សំណួរ{name}!</b>\n\n"
         f"ទាក់ទងនឹងប្រធានបទនេះ ខ្ញុំសូមចែករំលែកសង្ខេបដូចខាងក្រោម៖\n\n"
