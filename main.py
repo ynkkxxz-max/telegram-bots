@@ -88,10 +88,10 @@ async def main():
     else:
         logger.info("BOT_TOKEN_2 is empty (not running).")
 
-    # 3. Bot 3
+    # 3. Bot 3 (ស្វែងរកស្នេហ៍ @LoveFinderKh_bot)
     if config.BOT_TOKEN_3:
-        logger.info("Initializing Bot 3...")
-        tasks.append(asyncio.create_task(run_single_bot(build_bot3_app, config.BOT_TOKEN_3, "Bot 3", stop_event)))
+        logger.info("Initializing Bot 3 (ស្វែងរកស្នេហ៍ @LoveFinderKh_bot)...")
+        tasks.append(asyncio.create_task(run_single_bot(build_bot3_app, config.BOT_TOKEN_3, "Bot 3 (Love Finder)", stop_event)))
     else:
         logger.info("BOT_TOKEN_3 is empty (not running).")
 
