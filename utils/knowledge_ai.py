@@ -344,7 +344,7 @@ def _smart_offline_reply(user_query: str, user_name: str = "") -> str:
         )
 
     # 14. ភាសាអង់គ្លេស និងការរៀនភាសាបរទេស (English Learning)
-    if any(k in t for k in ["ភាសាអង់គ្លេស", "english", "ភាសា", "language", "grammar", "vocabulary"]):
+    if any(k in t for k in ["ភាសាអង់គ្លេស", "english", "grammar", "vocabulary"]):
         return (
             "🇬🇧 <b>គន្លឹះរៀនភាសាអង់គ្លេសឱ្យឆាប់ចេះ និងនិយាយបានដោយទំនុកចិត្ត៖</b>\n\n"
             "<b>១. ផ្តោតលើការស្តាប់ និងនិយាយជាមុន (Input & Output)៖</b>\n"
@@ -354,6 +354,13 @@ def _smart_offline_reply(user_query: str, user_name: str = "") -> str:
             "<b>៣. រៀនជាឃ្លា កុំទន្ទេញតែពាក្យមួយៗ (Learn Phrases, not single words)៖</b>\n"
             "រៀនពាក្យអមជាមួយបរិបទ និងប្រយោគជាក់ស្តែង ជួយឱ្យខួរក្បាលទាញយកមកប្រើប្រាស់បានលឿនពេលសន្ទនា!"
         )
+
+    # 14.1 ភាសាចិន និងវគ្គសិក្សាចិនកម្រិត ១ ដល់ ៥ (Chinese Learning HSK 1-6)
+    if any(k in t for k in ["ចិន", "ភាសាចិន", "រៀនចិន", "chinese", "hsk", "pinyin", "hanzi"]):
+        from utils.chinese_lessons import handle_chinese_query
+        cn_res = handle_chinese_query(user_query)
+        if cn_res:
+            return cn_res
 
     # 15. រូបវិទ្យា & វិទ្យាសាស្ត្រទូទៅ (Physics, Gravity, Quantum & Relativity)
     if any(k in t for k in ["រូបវិទ្យា", "physics", "ទំនាញ", "gravity", "ញូតុន", "newton", "អែងស្តែង", "einstein", "អាតូម", "atom", "quantum"]):

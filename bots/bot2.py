@@ -14,6 +14,12 @@ from telegram.ext import (
 from telegram.request import HTTPXRequest
 from utils.general_knowledge import get_random_fact, get_random_quiz
 from utils.knowledge_ai import generate_knowledge_reply, get_random_tip
+from utils.chinese_lessons import (
+    get_chinese_menu,
+    get_chinese_level,
+    handle_chinese_query,
+    get_random_chinese_card,
+)
 
 logger = logging.getLogger("Bot2_Knowledge")
 
@@ -33,6 +39,7 @@ KNOWLEDGE_KEYWORDS = [
     "រូបវិទ្យា", "ជីវវិទ្យា", "សេដ្ឋកិច្ច", "លុយ", "សន្សំ", "វិនិយោគ", "អាជីវកម្ម", "ទីផ្សារ",
     "កូដ", "coding", "programming", "python", "cyber", "cybersecurity", "hacker", "virus",
     "ចិត្តវិទ្យា", "ដឹកនាំ", "leadership", "អង់គ្លេស", "english", "អវកាស", "ភ្នំ", "everest", "សមុទ្រ",
+    "ចិន", "ភាសាចិន", "រៀនចិន", "chinese", "hsk", "pinyin", "hanzi",
 ]
 
 def get_user_name(update: Update) -> str:
@@ -102,8 +109,10 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "• វិទ្យាសាស្ត្រ និងបច្ចេកវិទ្យា 🔬💻\n"
         "• ប្រវត្តិសាស្ត្រ និងវប្បធម៌ 🏛️🇰🇭\n"
         "• ការអភិវឌ្ឍខ្លួន និងការសិក្សា 📚💡\n"
+        "• រៀនភាសាចិនបកប្រែខ្មែរ (HSK 1-6) 🇨🇳✨\n"
         "• ចំណេះដឹងទូទៅជុំវិញពិភពលោក 🌍✨\n\n"
         "<b>ពាក្យបញ្ជាសំខាន់ៗ៖</b>\n"
+        "👉 /chinese - រៀនភាសាចិនបកប្រែខ្មែរ (កម្រិត ១ ដល់ ៥) 🇨🇳\n"
         "👉 /fact - ចំណេះដឹងទូទៅប្លែកៗគួរឱ្យចាប់អារម្មណ៍ 💡\n"
         "👉 /quiz - ល្បងប្រាជ្ញាចំណេះដឹងទូទៅ (Poll Quiz) 🎯\n"
         "👉 /tips - គន្លឹះអភិវឌ្ឍខ្លួន និងបច្ចេកទេសរៀនសូត្រ 🧠\n"
@@ -117,12 +126,23 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = (
         "<b>📖 របៀបប្រើប្រាស់ Bot «ក្រុមចែករំលែកចំណេះដឹង»៖</b>\n\n"
         "1. <b>សួរសំណួរដោយផ្ទាល់៖</b> សរសេរសំណួររបស់អ្នកផ្ញើមកកាន់ Bot ក្នុងឆាតឯកជន ឬ Tag @sharelearningkh_bot ក្នុងគ្រុប\n"
-        "2. <b>/fact ៖</b> អានចំណេះដឹងទូទៅប្លែកៗអំពីវិទ្យាសាស្ត្រ ប្រវត្តិសាស្ត្រ និងកម្ពុជា\n"
-        "3. <b>/quiz ៖</b> ចូលរួមលេងសំណួរល្បងប្រាជ្ញាចំណេះដឹងទូទៅ\n"
-        "4. <b>/tips ៖</b> ទទួលគន្លឹះអភិវឌ្ឍខ្លួន បច្ចេកទេសគ្រប់គ្រងពេលវេលា និងវិធីរៀនពូកែ\n"
-        "5. <b>ការពារគ្រុប៖</b> ប្រព័ន្ធ Anti-Link លុប Link Spam ដោយស្វ័យប្រវត្តិ!"
+        "2. <b>/chinese [1-5] ៖</b> រៀនភាសាចិនបកប្រែខ្មែរពីកម្រិតដំបូងដល់កម្រិតខ្ពស់ (HSK 1 - HSK 6)\n"
+        "3. <b>/fact ៖</b> អានចំណេះដឹងទូទៅប្លែកៗអំពីវិទ្យាសាស្ត្រ ប្រវត្តិសាស្ត្រ និងកម្ពុជា\n"
+        "4. <b>/quiz ៖</b> ចូលរួមលេងសំណួរល្បងប្រាជ្ញាចំណេះដឹងទូទៅ\n"
+        "5. <b>/tips ៖</b> ទទួលគន្លឹះអភិវឌ្ឍខ្លួន បច្ចេកទេសគ្រប់គ្រងពេលវេលា និងវិធីរៀនពូកែ\n"
+        "6. <b>ការពារគ្រុប៖</b> ប្រព័ន្ធ Anti-Link លុប Link Spam ដោយស្វ័យប្រវត្តិ!"
     )
     await update.message.reply_text(help_text, parse_mode="HTML")
+
+async def chinese_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handler for /chinese command: learning Chinese with Khmer translations from level 1 to 5."""
+    args = context.args
+    if args and args[0].isdigit():
+        lvl = int(args[0])
+        response_text = get_chinese_level(lvl)
+    else:
+        response_text = get_chinese_menu()
+    await update.message.reply_text(response_text, parse_mode="HTML")
 
 async def fact_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler for /fact command."""
@@ -188,7 +208,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             cleaned_text = cleaned_text.replace(f"@{bot.username}", "").replace(f"@{bot.username.lower()}", "").strip()
 
         await context.bot.send_chat_action(chat_id=chat.id, action="typing")
-        reply = await generate_knowledge_reply(cleaned_text if cleaned_text else text, user_name)
+        query_text = cleaned_text if cleaned_text else text
+
+        chinese_reply = handle_chinese_query(query_text)
+        if chinese_reply:
+            reply = chinese_reply
+        else:
+            reply = await generate_knowledge_reply(query_text, user_name)
 
         try:
             await message.reply_text(reply, parse_mode="HTML")
@@ -221,6 +247,8 @@ def build_bot2_app(token: str) -> Application:
     # 2. Commands (group 0)
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("chinese", chinese_command))
+    app.add_handler(CommandHandler("cn", chinese_command))
     app.add_handler(CommandHandler("fact", fact_command))
     app.add_handler(CommandHandler("quiz", quiz_command))
     app.add_handler(CommandHandler("tips", tips_command))
