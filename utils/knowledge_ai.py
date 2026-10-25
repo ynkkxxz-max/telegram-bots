@@ -449,34 +449,18 @@ def _smart_offline_reply(user_query: str, user_name: str = "") -> str:
             "💡 <i>ពេលអ្នកស្វែងរកចំណុចកណ្តាលនៃរង្វង់ទាំង ៤ នេះឃើញ នោះអ្នកនឹងរកឃើញគោលដៅជីវិតដ៏ពិតប្រាកដ (Your True Ikigai)!</i>"
         )
 
-    # 22. Default dynamic response: AI-level intelligent analytical synthesis
+    # 22. Default dynamic response: fast, direct, structured
     return (
-        f"🤖 <b>ការវិភាគឆ្លាតវៃតាមបែប AI សម្រាប់សំណួរ{name}៖</b>\n\n"
-        f"<b>១. សេចក្ដីសង្ខេបអំពី៖</b> «{user_query}»\n"
-        f"ប្រធានបទនេះពាក់ព័ន្ធនឹងចំណេះដឹងទូទៅ និងការវិភាគបែបស៊ីជម្រៅ។ ដើម្បីស្វែងយល់ឱ្យកាន់តែច្បាស់ យើងអាចបែងចែកជា ៣ មុំសំខាន់ៗ៖\n\n"
-        f"• <b>ទស្សនៈទ្រឹស្តី & មូលដ្ឋានគ្រឹះ៖</b> ការយល់ដឹងពីប្រភពដើម និងគោលការណ៍ធម្មជាតិ\n"
-        f"• <b>ការអនុវត្តក្នុងជីវិតជាក់ស្តែង៖</b> របៀបដែលចំណេះដឹងនេះជួយបង្កើនសមត្ថភាព និងការរស់នៅ\n"
-        f"• <b>ការអភិវឌ្ឍទៅអនាគត៖</b> ផលប៉ះពាល់នៃការវិវត្តបច្ចេកវិទ្យា និងចំណេះដឹងសកល\n\n"
-        f"<b>២. គន្លឹះរុករកចំណេះដឹងបន្ថែម៖</b>\n"
-        f"👉 វាយ <b>/fact</b> ដើម្បីអានការពិតអស្ចារ្យជុំវិញពិភពលោក\n"
-        f"👉 វាយ <b>/quiz</b> ដើម្បីចូលរួមល្បងប្រាជ្ញា Quiz\n"
-        f"👉 វាយ <b>/tips</b> ដើម្បីទទួលបានគន្លឹះអភិវឌ្ឍខ្លួន\n\n"
-        f"💡 <i>អ្នកអាចសាកល្បងសួរពី៖ ការជួសជុលកុំព្យូទ័រ, AI, Coding, សុវត្ថិភាព Cyber, ចិត្តវិទ្យា, អាជីវកម្ម, លុយកាក់, អវកាស, រូបវិទ្យា, ប្រវត្តិសាស្ត្រអង្គរវត្ត និងភាសាអង់គ្លេស!</i> ✨"
+        f"💡 <b>សូមអរគុណសម្រាប់សំណួរ{name}!</b>\n\n"
+        f"<b>ប្រធានបទ៖</b> «{user_query}»\n\n"
+        f"ទាក់ទងនឹងប្រធានបទនេះ អ្នកអាចស្វែងយល់បន្ថែមតាមរយៈមុខងាររហ័សខាងក្រោម៖\n"
+        f"• <b>/fact</b> ៖ អានចំណេះដឹងទូទៅប្លែកៗទូទាំងពិភពលោក 💡\n"
+        f"• <b>/quiz</b> ៖ ចូលរួមល្បងប្រាជ្ញាចំណេះដឹងទូទៅ 🎯\n"
+        f"• <b>/tips</b> ៖ គន្លឹះអភិវឌ្ឍខ្លួន និងបច្ចេកទេសរៀនសូត្រ 🧠\n\n"
+        f"📚 <i>ប្រធានបទដែលឆ្លើយបានរហ័សទាន់ចិត្ត៖ ការជួសជុលកុំព្យូទ័រ, បច្ចេកវិទ្យា, សរសេរកូដ, សុវត្ថិភាព Cyber, ចិត្តវិទ្យា, អាជីវកម្ម, លុយកាក់, រូបវិទ្យា, ជីវវិទ្យា, សេដ្ឋកិច្ច, ភូមិសាស្ត្រ, អវកាស, អង្គរវត្ត និងភាសាអង់គ្លេស!</i> ✨"
     )
 
 async def generate_knowledge_reply(prompt: str, user_name: str = "") -> str:
-    """Generate educational reply via Gemini, OpenAI, or smart offline engine."""
-    # Try Gemini API if key configured
-    if config.GEMINI_API_KEY:
-        ans = await _call_gemini_api(prompt)
-        if ans:
-            return ans
-
-    # Try OpenAI API if key configured
-    if config.OPENAI_API_KEY:
-        ans = await _call_openai_api(prompt)
-        if ans:
-            return ans
-
-    # Offline high-quality smart knowledge responder
+    """Generate instant educational reply directly from local knowledge base (Fast & No external API lag)."""
+    # ឆ្លើយតបភ្លាមៗដោយផ្ទាល់ (Instant Reply) មិនបាច់រង់ចាំប្រព័ន្ធ AI ខាងក្រៅឡើយ
     return _smart_offline_reply(prompt, user_name)
