@@ -81,10 +81,10 @@ async def main():
     else:
         logger.warning("BOT_TOKEN_1 is not set in .env")
 
-    # 2. Bot 2
+    # 2. Bot 2 (ក្រុមចែករំលែកចំណេះដឹង)
     if config.BOT_TOKEN_2:
-        logger.info("Initializing Bot 2...")
-        tasks.append(asyncio.create_task(run_single_bot(build_bot2_app, config.BOT_TOKEN_2, "Bot 2", stop_event)))
+        logger.info("Initializing Bot 2 (ក្រុមចែករំលែកចំណេះដឹង @sharelearningkh_bot)...")
+        tasks.append(asyncio.create_task(run_single_bot(build_bot2_app, config.BOT_TOKEN_2, "Bot 2 (Knowledge Share)", stop_event)))
     else:
         logger.info("BOT_TOKEN_2 is empty (not running).")
 
