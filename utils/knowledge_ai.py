@@ -344,7 +344,11 @@ def _smart_offline_reply(user_query: str, user_name: str = "") -> str:
         )
 
     # 14. ភាសាអង់គ្លេស និងការរៀនភាសាបរទេស (English Learning)
-    if any(k in t for k in ["ភាសាអង់គ្លេស", "english", "grammar", "vocabulary"]):
+    if any(k in t for k in ["ភាសាអង់គ្លេស", "english", "grammar", "vocabulary", "អង់គ្លេស"]):
+        from utils.english_lessons import handle_english_query
+        en_res = handle_english_query(user_query)
+        if en_res:
+            return en_res
         return (
             "🇬🇧 <b>គន្លឹះរៀនភាសាអង់គ្លេសឱ្យឆាប់ចេះ និងនិយាយបានដោយទំនុកចិត្ត៖</b>\n\n"
             "<b>១. ផ្តោតលើការស្តាប់ និងនិយាយជាមុន (Input & Output)៖</b>\n"
