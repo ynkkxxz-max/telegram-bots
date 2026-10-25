@@ -102,17 +102,17 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler for /start command."""
     welcome_text = (
         "សួស្តីបាទ/ចាស! ស្វាគមន៍មកកាន់ <b>ស្វែងរកស្នេហ៍😘</b> (@LoveFinderKh_bot) 💘\n\n"
-        "ខ្ញុំជា Bot មេអណ្តើក (Cupid) ប្រចាំគ្រុប ដែលជួយផ្គូផ្គងគូព្រេង វាស់កម្រិតស្នេហា និងបង្កើតបរិយាកាសផ្អែមល្ហែមរីករាយក្នុងគ្រុប!\n\n"
+        "ខ្ញុំជា Bot មេអណ្តើកប្រចាំគ្រុប ដែលជួយផ្គូផ្គងគូស្នេហ៍ វាស់កម្រិតចិត្តស្រឡាញ់ និងបង្កើតបរិយាកាសរីករាយក្នុងគ្រុប!\n\n"
         "<b>ពាក្យបញ្ជាឡូយៗក្នុងគ្រុប៖</b>\n"
         "👉 /match ឬ /couple - ផ្គូផ្គងគូស្នេហ៍ចៃដន្យប្រចាំថ្ងៃក្នុងគ្រុប 💘\n"
         "👉 /love [ឈ្មោះ១] [ឈ្មោះ២] - វាស់ភាគរយស្នេហា និងភាពស៊ីសង្វាក់គ្នា ❤️\n"
-        "👉 /flirt - ពាក្យញ៉ែផ្អែមល្ហែមរំជួលបេះដូង 🌹\n"
+        "👉 /flirt - ពាក្យញ៉ែផ្អែមល្ហែមរំជួលចិត្ត 🌹\n"
         "👉 /fortune - ទស្សន៍ទាយរាសីស្នេហាប្រចាំថ្ងៃ 🔮\n"
         "👉 /crush [@user] [សារ] - សារភាពស្នេហាសម្ងាត់ទៅកាន់ Crush (លាក់ឈ្មោះ) 💌\n"
         "👉 /truth - សំណួរសច្ចៈស្នេហា 🤫\n"
         "👉 /dare - ការប្រឈមហ៊ានស្នេហា 🔥\n"
         "👉 /help - មើលរបៀបប្រើប្រាស់\n\n"
-        "<i>សូមជូនពរឱ្យអ្នកទាំងអស់គ្នារកឃើញគូព្រេងពិតប្រាកដឆាប់ៗណា៎!</i> 💖✨"
+        "<i>សូមជូនពរឱ្យអ្នកទាំងអស់គ្នាឆាប់មានសង្សារ និង Crush ស្រឡាញ់វិញណា៎!</i> 🥰✨"
     )
     try:
         await update.message.reply_text(welcome_text, parse_mode="HTML")
@@ -127,7 +127,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "1. <b>/match ឬ /couple ៖</b> ឱ្យ Bot ដើរតួជាមេអណ្តើក ចាប់គូសមាជិក ២ នាក់ក្នុងគ្រុបជាគូស្នេហ៍ប្រចាំថ្ងៃ 💘\n"
         "2. <b>/love [ឈ្មោះ១] [ឈ្មោះ២] ៖</b> គណនាភាគរយស្នេហា (ឬ Reply លើសាររបស់ Crush រួចវាយ /love) ❤️\n"
         "3. <b>/flirt ៖</b> ចែករំលែកពាក្យញ៉ែផ្អែមល្ហែម និងកំប្លែងៗ 🌹\n"
-        "4. <b>/fortune ៖</b> ទស្សន៍ទាយរាសីស្នេហា និងឱកាសជួបគូព្រេងថ្ងៃនេះ 🔮\n"
+        "4. <b>/fortune ៖</b> ទស្សន៍ទាយរាសីស្នេហា និងឱកាសជួបមនុស្សពិសេសថ្ងៃនេះ 🔮\n"
         "5. <b>/crush [@user] [សារ] ៖</b> សារភាពស្នេហាសម្ងាត់! Bot នឹងប្រកាសក្នុងគ្រុបដោយមិនប្រាប់ឈ្មោះអ្នកផ្ញើឡើយ 💌\n"
         "6. <b>/truth & /dare ៖</b> ល្បែងសច្ចៈ ឬហ៊ានបែបស្នេហាសម្រាប់លេងកម្សាន្តក្នុងគ្រុប 🔥\n"
         "7. <b>ការពារគ្រុប៖</b> ប្រព័ន្ធ Anti-Link លុប Link Spam ផ្សាយពាណិជ្ជកម្មដោយស្វ័យប្រវត្តិ!"
@@ -154,17 +154,17 @@ async def match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         person2 = "Crush អាថ៌កំបាំងក្នុងគ្រុប"
     else:
         person1 = sender_name
-        person2 = "គូព្រេងអនាគត"
+        person2 = "Crush ក្នុងគ្រុប"
 
     score, bar, commentary = calculate_love_score(person1, person2)
 
     response = (
         "💘 <b>គូស្នេហ៍ប្រចាំថ្ងៃក្នុងគ្រុប (Couple of the Day)៖</b>\n\n"
-        f"🤵 <b>{person1}</b>  ❤️  👰 <b>{person2}</b>\n\n"
+        f"🙋‍♂️ <b>{person1}</b>  ❤️  🙋‍♀️ <b>{person2}</b>\n\n"
         f"📊 <b>កម្រិតភាពស៊ីសង្វាក់គ្នា៖</b> <b>{score}%</b>\n"
         f"<code>{bar}</code>\n\n"
         f"{commentary}\n\n"
-        "🎉 <i>សូមចូលរួមអបអរសាទរគូស្នេហ៍ថ្មីក្នុងគ្រុប! កុំភ្លេចហៅគ្នាយើងញ៉ាំការផងណា៎!</i> 🥂💍"
+        "🎉 <i>អបអរសាទរគូស្នេហ៍ថ្មីក្នុងគ្រុប! កុំភ្លេចប៉ាវគ្នាយើងញ៉ាំតែគុជ ឬកាហ្វេផងណា៎!</i> 🧋☕🥰"
     )
     try:
         await update.message.reply_text(response, parse_mode="HTML")
@@ -279,7 +279,7 @@ async def welcome_new_member(update: Update, context: ContextTypes.DEFAULT_TYPE)
         name = html.escape(member.first_name or "គ្នាយើង")
         welcome_msg = (
             f"👋 ស្វាគមន៍ {name} ចូលមកកាន់គ្រុប <b>ស្វែងរកស្នេហ៍😘</b>! 🌹\n\n"
-            "សូមជូនពរឱ្យអ្នកឆាប់រកឃើញគូព្រេង និង Crush ក្នុងគ្រុបនេះណា៎! 💖\n\n"
+            "សូមជូនពរឱ្យអ្នកឆាប់បាន Crush ឬរកបានសង្សារក្នុងគ្រុបនេះណា៎! 💖\n\n"
             "👉 វាយ <b>/match</b> ដើម្បីផ្គូផ្គងគូស្នេហ៍ចៃដន្យ 💘\n"
             "👉 វាយ <b>/flirt</b> ដើម្បីមើលពាក្យញ៉ែផ្អែមល្ហែម 🍯\n"
             "👉 វាយ <b>/fortune</b> ដើម្បីទស្សន៍ទាយរាសីស្នេហាថ្ងៃនេះ! 🔮"
@@ -333,7 +333,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if any(k in text for k in ["single", "នៅលីវ", "គ្មានសង្សារ"]):
             reply = (
                 f"នៅលីវមែនទេ {user_name}? កុំបារម្ភអី! ចូលគ្រុប <b>ស្វែងរកស្នេហ៍😘</b> ធានាថាមិនខ្វះគូទេ! "
-                "សាកវាយ <b>/match</b> មើលគូព្រេងថ្ងៃនេះ ឬវាយ <b>/flirt</b> យកពាក្យញ៉ែទៅសារភាពស្នេហ៍មើលទៅ! 💘😉"
+                "សាកវាយ <b>/match</b> មើលគូស្នេហ៍ថ្ងៃនេះ ឬវាយ <b>/flirt</b> យកពាក្យញ៉ែទៅញ៉ែ Crush មើលទៅ! 💘😉"
             )
         elif any(k in text for k in ["ស្រឡាញ់", "crush", "លួចស្រឡាញ់"]):
             reply = (
@@ -343,7 +343,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif any(k in text for k in ["ខូចចិត្ត", "sad", "ឈឺចាប់"]):
             reply = (
                 f"កុំពិបាកចិត្តអី {user_name}! មនុស្សម្នាក់ចាកចេញ គឺដើម្បីទុកកន្លែងឱ្យមនុស្សល្អពិតប្រាកដម្នាក់ទៀតចូលមក! "
-                "ញញឹមឡើង គូព្រេងពិតរបស់អ្នកកំពុងរង់ចាំអ្នកនៅខាងមុខនេះហើយ! 💖🌻"
+                "ញញឹមឡើង មនុស្សល្អរបស់អ្នកកំពុងរង់ចាំអ្នកនៅខាងមុខនេះហើយ! 💖🌻"
             )
         else:
             reply = (
